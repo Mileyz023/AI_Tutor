@@ -229,7 +229,7 @@
             if (selectedTopics.length === 0) {
                 // Step 2: Select topics based on user input
                 if (message.includes("computer") || message.includes("love")) {
-                    selectedTopics = message.includes("computers") 
+                    selectedTopics = message.includes("computer") 
                         ? ["computers", "love"] 
                         : ["love", "computers"]; // Determine the order of topics
                     currentTopic = selectedTopics[0]; // Start with the first topic
