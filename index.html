@@ -226,39 +226,72 @@
                 response: message
             });
 
-            if (selectedTopics.length === 0) {
-                // Step 2: Select topics based on user input
-                if (message.includes("computer") || message.includes("love")) {
-                    selectedTopics = message.includes("computer") 
-                        ? ["computers", "love"] 
-                        : ["love", "computers"]; // Determine the order of topics
-                    currentTopic = selectedTopics[0]; // Start with the first topic
-                    playAssessFamiliarityAudio();
-                } 
-                else {
-                    // If user input is invalid, prompt to choose a valid topic
-                    addAudioResponse(audioMap["choose_valid_topic"]);
-                }
-            } 
-            else if (currentFactIndex === 0) {
-                // Step 3: Assess familiarity for the topic
-                currentFactIndex++;
-                addAudioResponse(audioMap["response_familiarity"]);
-                setTimeout(() => {
-                    addAudioResponse(audioMap[`${currentTopic}_fact${currentFactIndex}`]);
-                }, 3000);
-            } 
-            else if (currentFactIndex > 0 && currentFactIndex < 10) {
-                // Step 4: Present next facts for the current topic
-                currentFactIndex++;
-                // addAudioResponse(audioMap["response_familiarity"]);
+        //     if (selectedTopics.length === 0) {
+        //         // Step 2: Select topics based on user input
+        //         if (message.includes("computer") || message.includes("love") || message.includes("relationship")) {
+        //             selectedTopics = message.includes("computer") 
+        //                 ? ["computers", "love"] 
+        //                 : ["love", "computers"]; // Determine the order of topics
+        //             currentTopic = selectedTopics[0]; // Start with the first topic
+        //             playAssessFamiliarityAudio();
+        //         } 
+        //         else {
+        //             // If user input is invalid, prompt to choose a valid topic
+        //             addAudioResponse(audioMap["choose_valid_topic"]);
+        //         }
+        //     } 
+        //     else if (currentFactIndex === 0) {
+        //         // Step 3: Assess familiarity for the topic
+        //         currentFactIndex++;
+        //         addAudioResponse(audioMap["response_familiarity"]);
+        //         setTimeout(() => {
+        //             addAudioResponse(audioMap[`${currentTopic}_fact${currentFactIndex}`]);
+        //         }, 3000);
+        //     } 
+        //     else if (currentFactIndex > 0 && currentFactIndex < 10) {
+        //         // Step 4: Present next facts for the current topic
+        //         currentFactIndex++;
+        //         // addAudioResponse(audioMap["response_familiarity"]);
+        //         addAudioResponse(audioMap[`${currentTopic}_fact${currentFactIndex}`]);
+        //     }
+        //     else if (currentFactIndex === 10) {
+        //         // Step 5: Transition to the next topic
+        //         transitionToNextTopic();
+        //     }
+        // }
+
+        setTimeout(() => {
+        if (selectedTopics.length === 0) {
+            // Step 2: Select topics based on user input
+            if (message.includes("computer") || message.includes("love") || message.includes("relationship")) {
+                selectedTopics = message.includes("computer") 
+                    ? ["computers", "love"] 
+                    : ["love", "computers"]; // Determine the order of topics
+                currentTopic = selectedTopics[0]; // Start with the first topic
+                playAssessFamiliarityAudio();
+            } else {
+                // If user input is invalid, prompt to choose a valid topic
+                addAudioResponse(audioMap["choose_valid_topic"]);
+            }
+        } else if (currentFactIndex === 0) {
+            // Step 3: Assess familiarity for the topic
+            currentFactIndex++;
+            addAudioResponse(audioMap["response_familiarity"]);
+            setTimeout(() => {
                 addAudioResponse(audioMap[`${currentTopic}_fact${currentFactIndex}`]);
-            }
-            else if (currentFactIndex === 10) {
-                // Step 5: Transition to the next topic
-                transitionToNextTopic();
-            }
+            }, 1500); // Delay for the next audio
+        } else if (currentFactIndex > 0 && currentFactIndex < 10) {
+            // Step 4: Present next facts for the current topic
+            currentFactIndex++;
+            addAudioResponse(audioMap[`${currentTopic}_fact${currentFactIndex}`]);
+        } else if (currentFactIndex === 10) {
+            // Step 5: Transition to the next topic
+            transitionToNextTopic();
         }
+    }, 1500); // Delay the response logic by 1.5 seconds
+}
+
+        
 
         function playAssessFamiliarityAudio() {
             // Play topic-specific assess familiarity audio
